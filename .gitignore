@@ -148,3 +148,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java,web,java-web,git,gradle
+/.dbeaver/
