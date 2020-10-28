@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gradle_spring_mybatis_webmvc_sutdy.mapper.MemberMapper">
+	<resultMap type="Member" id="resMember">
+		<result column="REGDATE" property="registerDateTime" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+	</resultMap>
+
+	<sql id="selectSQL">
+		SELECT * FROM MEMBER
+	</sql>
+	
+	<sql id="whereSQL">
+		<where>
+			<if test="email != null">and email = #{email}</if>
+		</where>
+	</sql>
+	
+	<sql id="setSQL">
+		<set>
+			<if test="name != null">name = #{name}, </if>
+			<if test="password != null">password = #{password},</if>
+		</set>
+	</sql>
+	
+	<select id="selectMemberAll" resultMap="resMember">
+		<include refid="selectSQL"></include>
+	</select>
+	
+	<select id="selectMemberByEmail" resultMap="resMember">
+		<include refid="selectSQL"></include>
+		<include refid="whereSQL"></include>
+	</select>
+	
+	<insert id="insertMember">
+		INSERT INTO MEMBER(EMAIL, PASSWORD, NAME, REGDATE)
+		VALUES(#{email}, #{password}, #{name}, #{registerDateTime})
+	</insert>
+	
+	<update id="updateMember">
+		UPDATE MEMBER
+		<include refid="setSQL"/>
+		<include refid="whereSQL"/>
+	</update>
+	
+	<delete id="deleteMember">
+		DELETE FROM MEMBER
+		<include refid="whereSQL"></include>
+	</delete>
+	
+</mapper>
